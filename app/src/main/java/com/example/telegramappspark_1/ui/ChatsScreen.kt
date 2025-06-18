@@ -25,10 +25,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,13 +45,7 @@ fun ChatsScreen(mock: ChatsScreenState, modifier: Modifier) {
     Box(
         modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    Pair(0f, Color(0xFFcc5906)),
-                    Pair(1f, Color(0xFFF00000))
-                )
-            )
-    ) {}
+            .background(color = Color.White)) {}
     Column(modifier = modifier) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Box(
@@ -65,7 +62,7 @@ fun ChatsScreen(mock: ChatsScreenState, modifier: Modifier) {
             Text(
                 "SparkGram",
                 fontSize = 40.sp,
-                color = Color.White,
+                color = Color(0xFFcc5906L),
                 modifier = Modifier.padding(5.dp),
                 fontFamily = Roboto,
                 fontWeight = FontWeight.Medium
@@ -91,7 +88,7 @@ fun ChatsScreen(mock: ChatsScreenState, modifier: Modifier) {
             horizontalArrangement = Arrangement.Center
         ) {
             TextField(
-                "Search chats",
+                "Search for messages or users",
                 {},
                 Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(50.dp),
@@ -99,8 +96,7 @@ fun ChatsScreen(mock: ChatsScreenState, modifier: Modifier) {
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                     focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.Gray,
-                    unfocusedContainerColor = Color.White
+                    unfocusedTextColor = Color.Gray
                 ),
                 leadingIcon = {
                     Image(
@@ -109,29 +105,88 @@ fun ChatsScreen(mock: ChatsScreenState, modifier: Modifier) {
                         modifier = Modifier
                             .size(20.dp)
                     )
-                }
+                },
+                textStyle = TextStyle(
+                    fontSize = 17.sp,
+                    fontFamily = Roboto
+                ),
+
             )
         }
-        HorizontalDivider(modifier = Modifier
-            .fillMaxWidth(),
-            color = Color.DarkGray)
 
         LazyColumn(
             modifier = Modifier
-                .height(620.dp)
-                .fillMaxWidth()
+                .fillMaxSize()
                 .background(Color.White)
         ) {
-            items(mock.chats) {chat -> ChatCard(chatState = chat, modifier = Modifier)  }
+            items(mock.chats) { chat -> ChatCard(chatState = chat, modifier = Modifier) }
         }
 
-        HorizontalDivider(modifier = Modifier
-            .fillMaxWidth(),
-            color = Color.DarkGray)
 
-        Box(modifier = Modifier
-            .fillMaxSize())
     }
+    Column(
+        Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(85.dp)
+                .background(Color(0xFFcc5906)),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            Box(modifier = Modifier
+                .padding(top = 10.dp)
+                .clickable{}) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(
+                        painter = painterResource(R.drawable.contacts),
+                        null,
+                        modifier = Modifier.size(40.dp)
+                    )
+                    Text(
+                        "Contacts",
+                        color = Color.White
+                    )
+                }
+            }
+            Box(modifier = Modifier
+                .padding(top = 10.dp)
+                .clickable{}) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(
+                        painter = painterResource(R.drawable.chats),
+                        null,
+                        modifier = Modifier.size(40.dp)
+                    )
+                    Text(
+                        "Chats",
+                        color = Color.White
+                    )
+
+                }
+            }
+            Box(modifier = Modifier
+                .padding(top = 10.dp)
+                .clickable{}) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(
+                        painter = painterResource(R.drawable.phone),
+                        null,
+                        modifier = Modifier.size(40.dp)
+                    )
+                    Text(
+                        "Calls",
+                        color = Color.White
+                    )
+
+                }
+            }
+
+        }
+    }
+
 }
 
 
