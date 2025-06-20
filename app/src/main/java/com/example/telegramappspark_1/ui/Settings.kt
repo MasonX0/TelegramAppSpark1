@@ -48,18 +48,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 import com.example.telegramappspark_1.R
-
-@Preview(heightDp = 1350)
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+//@Preview(heightDp = 1350)
 @Composable
-fun SettingsTg() {
-    Box() {
+fun SettingsTg(user:UserData) {
+    Box()
+    {
+        var showQn by remember { mutableStateOf(false) }
         var showPopup by remember { mutableStateOf(false) }
         val alpha by animateFloatAsState(
-            targetValue = if (showPopup) 1f else 0f,
+            targetValue = if (showPopup or showQn) 1f else 0f,
             animationSpec = tween(durationMillis = 300)
         )
+
 
         val offsetY by animateFloatAsState(
             targetValue = if (showPopup) 0f else -20f,
@@ -69,6 +75,7 @@ fun SettingsTg() {
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = Color(0xFF182330))
+                .padding(top = 40.dp)
         ) {
             item {
                 Row(
@@ -134,7 +141,7 @@ fun SettingsTg() {
                             .clickable {}
                             .background(Color.Gray)) {
                         Image(
-                            painter = painterResource(R.drawable.avatar),
+                            painter = painterResource(user.UsImageResId),
                             contentDescription = "Профиль",
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop
@@ -142,7 +149,7 @@ fun SettingsTg() {
                         )
                     }
                     Column(modifier = Modifier.padding(start = 8.dp, top = 25.dp)) {
-                        Text("Mason", color = Color.White, fontSize = 23.sp)
+                        Text("${user.UsFirstName} ${user.UsLastName}", color = Color.White, fontSize = 23.sp)
                         Text(
                             "в сети", color = Color.Gray, modifier = Modifier.padding(top = 3.dp)
                         )
@@ -188,7 +195,7 @@ fun SettingsTg() {
                         Box(modifier = Modifier.clickable { }) {
                             Column {
                                 Text(
-                                    "+7 (967) 747-27-37",
+                                    user.UsPhoneNumber,
                                     color = Color.White,
                                     fontSize = 16.sp,
                                     modifier = Modifier.padding(top = 8.dp)
@@ -212,8 +219,7 @@ fun SettingsTg() {
                             modifier = Modifier
                                 .clickable { }) {
                             Column {
-                                Text(
-                                    "@rbmason",
+                                Text(text = user.UsNickName,
                                     color = Color.White,
                                     fontSize = 16.sp,
                                     modifier = Modifier.padding(top = 8.dp),
@@ -242,7 +248,7 @@ fun SettingsTg() {
                                 .padding()) {
                             Column {
                                 Text(
-                                    "О себе",
+                                    user.UsDiscription,
                                     color = Color.White,
                                     fontSize = 16.sp,
                                     modifier = Modifier.padding(top = 8.dp)
@@ -285,6 +291,7 @@ fun SettingsTg() {
                         Row(
                             modifier = Modifier
                                 .clickable { }
+                                .fillMaxWidth()
                                 .padding(top = 1.dp, start = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -314,7 +321,7 @@ fun SettingsTg() {
                         }
                         Row(
                             modifier = Modifier
-                                .clickable { }
+                                .clickable { }.fillMaxWidth()
                                 .padding(top = 10.dp, start = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -342,7 +349,7 @@ fun SettingsTg() {
                         }
                         Row(
                             modifier = Modifier
-                                .clickable { }
+                                .clickable { }.fillMaxWidth()
                                 .padding(top = 10.dp, start = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -370,7 +377,7 @@ fun SettingsTg() {
                         }
                         Row(
                             modifier = Modifier
-                                .clickable { }
+                                .clickable { }.fillMaxWidth()
                                 .padding(top = 10.dp, start = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -398,7 +405,7 @@ fun SettingsTg() {
                         }
                         Row(
                             modifier = Modifier
-                                .clickable { }
+                                .clickable { }.fillMaxWidth()
                                 .padding(top = 10.dp, start = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -426,7 +433,7 @@ fun SettingsTg() {
                         }
                         Row(
                             modifier = Modifier
-                                .clickable { }
+                                .clickable { }.fillMaxWidth()
                                 .padding(top = 10.dp, start = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -454,7 +461,7 @@ fun SettingsTg() {
                         }
                         Row(
                             modifier = Modifier
-                                .clickable { }
+                                .clickable { }.fillMaxWidth()
                                 .padding(top = 10.dp, start = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -482,7 +489,7 @@ fun SettingsTg() {
                         }
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .fillMaxWidth().fillMaxWidth()
                                 .clickable { }
                                 .padding(bottom = 10.dp, top = 10.dp, start = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
@@ -521,7 +528,7 @@ fun SettingsTg() {
                     ) {
                         Row(
                             modifier = Modifier
-                                .clickable { }
+                                .clickable { }.fillMaxWidth()
                                 .padding(top = 10.dp, start = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -551,7 +558,7 @@ fun SettingsTg() {
                         }
                         Row(
                             modifier = Modifier
-                                .clickable { }
+                                .clickable { }.fillMaxWidth()
                                 .padding(top = 10.dp, start = 13.dp, bottom = 10.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -598,7 +605,7 @@ fun SettingsTg() {
                     ) {
                         Row(
                             modifier = Modifier
-                                .clickable { }
+                                .clickable { showQn = !showQn }.fillMaxWidth()
                                 .padding(top = 5.dp, start = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -626,9 +633,14 @@ fun SettingsTg() {
 
                             )
                         }
+                        val context = LocalContext.current
                         Row(
-                            modifier = Modifier
-                                .clickable { }
+                            modifier = Modifier.fillMaxWidth()
+                                .clickable {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/sparkteamofficial"))
+                                    context.startActivity(intent)
+
+                                }
                                 .padding(top = 10.dp, start = 13.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -657,8 +669,11 @@ fun SettingsTg() {
                             )
                         }
                         Row(
-                            modifier = Modifier
-                                .clickable { }
+                            modifier = Modifier.fillMaxWidth()
+                                .clickable {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/escapefromtarkov?from=groups"))
+                                    context.startActivity(intent)
+                                }
                                 .padding(top = 10.dp, start = 13.dp, bottom = 10.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -706,71 +721,190 @@ fun SettingsTg() {
             }
 
         }
-        if (showPopup) {
+        if (showPopup or showQn) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.Black.copy(alpha = 0.5f * alpha))
-                    .clickable { showPopup = false } // Закрывает popup при клике
             )
         }
-        if (showPopup ) {
+        if (showPopup) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp, start = 100.dp, end = 10.dp)
-                    .offset(y = offsetY.dp)
-                    .shadow(8.dp, RoundedCornerShape(8.dp))
-                    .background(Color(0xFF2a3c52), RoundedCornerShape(8.dp))
-                    .padding(16.dp)
-            ) {
-                Column {
-                    Row(
-                        modifier = Modifier
-                            .clickable { }
-                            ,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.file_text_1),
-                            contentDescription = "Профиль",
+                    .fillMaxSize()
+                    .clickable { showPopup = false }) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 40.dp, start = 100.dp, end = 10.dp)
+                        .offset(y = offsetY.dp)
+                        .shadow(8.dp, RoundedCornerShape(8.dp))
+                        .background(Color(0xFF2a3c52), RoundedCornerShape(8.dp))
+                        .padding(16.dp)
+                        .clickable() {}
+                ) {
+                    Column {
+                        Row(
                             modifier = Modifier
-                                .size(30.dp)
-                                .padding()
-                        )
-                        Spacer(modifier = Modifier.padding(vertical = 5.dp))
-                        Text(
-                            "Изменить информацию",
-                            color = Color.White,
-                            fontSize = 18.sp,
-                            modifier = Modifier.padding(start = 10.dp)
-                        )
-                    }
-                    Row(
-                        modifier = Modifier
-                            .clickable { }
-                            .padding(top = 20.dp, bottom = 10.dp)
-                        ,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.log_out),
-                            contentDescription = "Профиль",
+                                .clickable { }
+                                .padding(top = 10.dp, bottom = 10.dp)
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = painterResource(R.drawable.edit),
+                                contentDescription = "Профиль",
+                                modifier = Modifier
+                                    .size(30.dp)
+                                    .padding()
+                            )
+                            Spacer(modifier = Modifier.padding(vertical = 5.dp))
+                            Text(
+                                "Изменить информацию",
+                                color = Color.White,
+                                fontSize = 18.sp,
+                                modifier = Modifier.padding(start = 10.dp)
+                            )
+                        }
+                        Row(
                             modifier = Modifier
-                                .size(30.dp)
-                                .padding()
-                        )
-                        Spacer(modifier = Modifier.padding(vertical = 5.dp))
-                        Text(
-                            "Выход",
-                            color = Color(0xFFFC4C53),
-                            fontSize = 18.sp,
-                            modifier = Modifier.padding(start = 10.dp)
-                        )
-                    }
+                                .clickable { }
+                                .padding(top = 10.dp, bottom = 10.dp)
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = painterResource(R.drawable.log_out),
+                                contentDescription = "Профиль",
+                                modifier = Modifier
+                                    .size(30.dp)
+                                    .padding()
+                            )
+                            Spacer(modifier = Modifier.padding(vertical = 5.dp))
+                            Text(
+                                "Выход",
+                                color = Color(0xFFFC4C53),
+                                fontSize = 18.sp,
+                                modifier = Modifier.padding(start = 10.dp)
+                            )
+                        }
 
+                    }
+                }
+
+            }
+        }
+        if (showQn) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable { showQn = false },
+                contentAlignment = Alignment.Center,) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(15.dp)
+                        .alpha(alpha)
+                        .shadow(8.dp, RoundedCornerShape(8.dp))
+                        .background(Color(0xFF2a3c52), RoundedCornerShape(8.dp))
+                        .padding(8.dp)
+                        .clickable() {},
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Column(
+                        modifier = Modifier.padding(
+                            15.dp
+                        )
+                    ) {
+                        Text(
+                            "Задать вопрос",
+                            modifier = Modifier.padding(bottom = 10.dp),
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            "Пожалуйста, обратите внимание, что в поддержке SparkGram отвечают масоны. Мы постараемся помочь как можно скорее, но ожидание может занять время.",
+                            color = Color.White,
+                            fontSize = 16.sp,
+                        )
+                        Text(
+                            "Пожалуйста, ознакомтесь с ",
+                            color = Color.White,
+                            modifier = Modifier.padding(top = 10.dp),
+                            fontSize = 16.sp,
+                        )
+                        Row() {
+                            Text(
+                                "частыми вопросами о Telegram ",
+                                color = Color(0xFF368CCC),
+                                fontSize = 16.sp,
+                                modifier = Modifier.clickable {})
+                            Text(
+                                ":",
+                                color = Color.White,
+                                fontSize = 16.sp,
+                            )
+                        }
+
+                        Text(
+                            "там есть ответ на большинство вопросов и важные советы по ",
+                            color = Color.White,
+                            fontSize = 16.sp,
+                        )
+                        Row() {
+                            Text(
+                                "устранению неполадок",
+                                color = Color(0xFF368CCC), fontSize = 16.sp,
+                                modifier = Modifier.clickable {})
+                            Text(
+                                ".",
+                                color = Color.White,
+                                fontSize = 16.sp,
+                            )
+                        }
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            Text(
+                                "Отмена",
+                                modifier = Modifier
+                                    .padding(top = 10.dp)
+                                    .clickable {},
+                                fontWeight = FontWeight.Medium,
+                                color = Color(0xFF368CCC),
+                                fontSize = 18.sp
+                            )
+                        }
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            Text(
+                                "Спросить волонтёров",
+                                fontWeight = FontWeight.Medium,
+                                modifier = Modifier
+                                    .padding(top = 15.dp)
+                                    .clickable {},
+                                color = Color(0xFF368CCC),
+                                fontSize = 18.sp,
+                            )
+                        }
+                    }
                 }
             }
         }
     }
+}
+@Preview
+@Composable
+fun SelegramAppSpark1Theme(){
+    SettingsTg(user = UserData(
+        UsFirstName = "Alex",
+        UsPhoneNumber = "+ 7 963 132 83 90",
+        UsLastName = "Mas0n",
+        UsDiscription = "Fucking Woods",
+        UsNickName = "Mas0nchik",
+    ))
 }

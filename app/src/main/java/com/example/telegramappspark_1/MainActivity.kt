@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.telegramappspark_1.ui.SettingsTg
+import com.example.telegramappspark_1.ui.UserData
 import com.example.telegramappspark_1.ui.theme.TelegramAppSpark1Theme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +21,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TelegramAppSpark1Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                SettingsTg(user = UserData(
+                    UsFirstName = "Alex",
+                    UsPhoneNumber = "+ 7 963 132 83 90",
+                    UsLastName = "Mas0n",
+                    UsDiscription = "Fucking Woods",
+                    UsNickName = "Mas0nchik",
+                ))
                 }
             }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TelegramAppSpark1Theme {
-        Greeting("Android")
-    }
-}
