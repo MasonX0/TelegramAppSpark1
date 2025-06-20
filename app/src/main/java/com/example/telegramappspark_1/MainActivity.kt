@@ -26,8 +26,9 @@ class MainActivity : ComponentActivity() {
                     UsPhoneNumber = "+ 7 963 132 83 90",
                     UsLastName = "Mas0n",
                     UsDiscription = "Fucking Woods",
-                    UsNickName = "Mas0nchik",
+                    UsNickName = "@Mas0nchik",
                 ))
                 }
             }
         }
+}
