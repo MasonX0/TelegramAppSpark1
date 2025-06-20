@@ -21,36 +21,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TelegramAppSpark1Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                SettingsTg(user = UserData(
+                    UsFirstName = "Alex",
+                    UsPhoneNumber = "+ 7 963 132 83 90",
+                    UsLastName = "Mas0n",
+                    UsDiscription = "Fucking Woods",
+                    UsNickName = "Mas0nchik",
+                ))
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-
-fun Show() {
-    SettingsTg(user= UserData(
-        UsFirstName = "Alex",
-        UsLastName = "Mason",
-        UsDiscription = "Работаем",
-        UsPhoneNumber = "+7 967 747 27 37",
-        UsNickName = "@MasonFromRb",
-        UsDateOfBirthday = "30.09.2006",
-        UsPersonalChannel = null,
-    ))
-}
