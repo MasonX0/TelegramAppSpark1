@@ -37,9 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.telegramappspark_1.R
 
-@Preview(heightDp = 1350)
+
+
 @Composable
-fun SettingsTg() {
+fun SettingsTg(user:UserData) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -105,7 +106,7 @@ fun SettingsTg() {
                         .clickable {}
                         .background(Color.Gray)) {
                     Image(
-                        painter = painterResource(R.drawable.avatar),
+                        painter = painterResource((user.UsAvatar)),
                         contentDescription = "Профиль",
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
@@ -113,7 +114,7 @@ fun SettingsTg() {
                     )
                 }
                 Column(modifier = Modifier.padding(start = 8.dp, top = 25.dp)) {
-                    Text("Mason", color = Color.White, fontSize = 23.sp)
+                    Text((user.UsFirstName+" "+user.UsLastName), color = Color.White, fontSize = 23.sp)
                     Text(
                         "в сети", color = Color.Gray, modifier = Modifier.padding(top = 3.dp)
                     )
@@ -159,7 +160,7 @@ fun SettingsTg() {
                     Box(modifier = Modifier.clickable { }) {
                         Column {
                             Text(
-                                "+7 (967) 747-27-37",
+                                user.UsPhoneNumber,
                                 color = Color.White,
                                 fontSize = 16.sp,
                                 modifier = Modifier.padding(top = 8.dp)
@@ -184,7 +185,7 @@ fun SettingsTg() {
                             .clickable { }) {
                         Column {
                             Text(
-                                "@rbmason",
+                                text=user.UsNickName,
                                 color = Color.White,
                                 fontSize = 16.sp,
                                 modifier = Modifier.padding(top = 8.dp),
@@ -213,7 +214,7 @@ fun SettingsTg() {
                             .padding()) {
                         Column {
                             Text(
-                                "О себе",
+                                text=user.UsDiscription,
                                 color = Color.White,
                                 fontSize = 16.sp,
                                 modifier = Modifier.padding(top = 8.dp)

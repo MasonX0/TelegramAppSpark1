@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.telegramappspark_1.ui.SettingsTg
+import com.example.telegramappspark_1.ui.UserData
 import com.example.telegramappspark_1.ui.theme.TelegramAppSpark1Theme
 
 class MainActivity : ComponentActivity() {
@@ -40,8 +42,15 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    TelegramAppSpark1Theme {
-        Greeting("Android")
-    }
+
+fun Show() {
+    SettingsTg(user= UserData(
+        UsFirstName = "Alex",
+        UsLastName = "Mason",
+        UsDiscription = "Работаем",
+        UsPhoneNumber = "+7 967 747 27 37",
+        UsNickName = "@MasonFromRb",
+        UsDateOfBirthday = "30.09.2006",
+        UsPersonalChannel = null,
+    ))
 }
