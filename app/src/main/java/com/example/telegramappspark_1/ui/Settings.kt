@@ -953,7 +953,9 @@ fun SettingsTg(user: UserData) {
             }
         }
     }
-    Box(
+
+}
+/*Box(
         modifier = Modifier
             .fillMaxHeight(0.26f)
             .fillMaxWidth()
@@ -981,9 +983,7 @@ fun SettingsTg(user: UserData) {
                 )
             }
         }
-    }
-}
-
+    }*/
 @Preview
 @Composable
 fun SelegramAppSpark1Theme() {
