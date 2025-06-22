@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
@@ -66,9 +67,30 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 @Composable
 fun EditPr(user: UserData) {
     Box()
-    {   var userdisrcby by remember { mutableStateOf(user.UsDiscription?:"")  }
+
+
+    {
+        val months = listOf(
+            "Январь", "Февраль", "Март", "Апрель",
+            "Май", "Июнь", "Июль", "Август",
+            "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+        )
+        var currentUser by remember { mutableStateOf(user) }
+        val days = (1..31).toList()
+        val years = (1953..2024).toList()
+        val daysState = rememberLazyListState(
+            initialFirstVisibleItemIndex = Int.MAX_VALUE / 2
+        )
+        val monthsState = rememberLazyListState(
+            initialFirstVisibleItemIndex = Int.MAX_VALUE / 2
+        )
+        val yearsState = rememberLazyListState(
+            initialFirstVisibleItemIndex = Int.MAX_VALUE / 2
+        )
+        var userdisrcby by remember { mutableStateOf(user.UsDiscription ?: "") }
         var userfirstname by remember { mutableStateOf(user.UsFirstName) }
         var userlastname by remember { mutableStateOf(user.UsLastName) }
+        var userdate by remember { mutableStateOf(user.UsDateOfBirthday ?: "") }
         var showQn by remember { mutableStateOf(false) }
         var showPopup by remember { mutableStateOf(false) }
         val alpha by animateFloatAsState(
@@ -78,7 +100,7 @@ fun EditPr(user: UserData) {
 
 
         val offsetY by animateFloatAsState(
-            targetValue = if (showPopup) 0f else -20f,
+            targetValue = if (showPopup) 0f else 100f,
             animationSpec = tween(durationMillis = 300)
         )
         LazyColumn(
@@ -138,7 +160,7 @@ fun EditPr(user: UserData) {
                                 textStyle = TextStyle(fontSize = 18.sp, color = Color.White),
                                 onValueChange = {
                                     userfirstname = it
-                                    user.UsFirstName = it
+                                    currentUser.UsFirstName = it
                                 },
                                 placeholder = { Text("Имя") },
                                 modifier =
@@ -177,7 +199,7 @@ fun EditPr(user: UserData) {
                                 textStyle = TextStyle(fontSize = 18.sp, color = Color.White),
                                 onValueChange = {
                                     userlastname = it
-                                    user.UsLastName = it
+                                    currentUser.UsLastName = it
                                 },
                                 placeholder = { Text("Фамилия") },
                                 modifier =
@@ -215,44 +237,69 @@ fun EditPr(user: UserData) {
                         .background(color = Color(0xFF202a36))
                 ) {
 
-                   Column {   Text(
-                        "Настройки",
-                        color = Color(0xFF368CCC),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(top = 15.dp, start = 20.dp, bottom = 7.dp)
-                    )
-                       Row(modifier = Modifier.clickable {  }.padding(bottom = 10.dp))  {Text(
-                           "Личный канал",
-                           color = Color.White,
-                           fontSize = 18.sp,
-                           fontWeight = FontWeight.Medium,
-                           modifier = Modifier.padding(top = 15.dp, start = 20.dp, bottom = 7.dp))
-                           Row (modifier = Modifier.fillMaxWidth().padding(end = 10.dp)
-                               , horizontalArrangement = Arrangement.End) {
-                               if (user.UsPersonalChannel!=null){
-                                   Text(
-                                       user.UsPersonalChannel!!.UsPersonalChannelName!!,
-                                       color = Color(0xFF368CCC),
-                                       fontSize = 18.sp,
-                                       fontWeight = FontWeight.Normal,
-                                       modifier = Modifier.padding(top = 15.dp, start = 20.dp, bottom = 7.dp))
+                    Column {
+                        Text(
+                            "Настройки",
+                            color = Color(0xFF368CCC),
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(top = 15.dp, start = 20.dp, bottom = 7.dp)
+                        )
+                        Row(
+                            modifier = Modifier
+                                .clickable { }
+                                .padding(bottom = 10.dp)) {
+                            Text(
+                                "Личный канал",
+                                color = Color.White,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Medium,
+                                modifier = Modifier.padding(
+                                    top = 15.dp,
+                                    start = 20.dp,
+                                    bottom = 7.dp
+                                )
+                            )
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(end = 10.dp),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                if (currentUser.UsPersonalChannel != null) {
+                                    Text(
+                                        currentUser.UsPersonalChannel!!.UsPersonalChannelName!!,
+                                        color = Color(0xFF368CCC),
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.Normal,
+                                        modifier = Modifier.padding(
+                                            top = 15.dp,
+                                            start = 20.dp,
+                                            bottom = 7.dp
+                                        )
+                                    )
 
-                               }
-                            else if (user.UsPersonalChannel==null){
-                                   Text(
-                                       "Добавить",
-                                       color = Color(0xFF368CCC),
-                                       fontSize = 18.sp,
-                                       fontWeight = FontWeight.Normal,
-                                       modifier = Modifier.padding(top = 15.dp, start = 20.dp, bottom = 7.dp))
+                                } else if (currentUser.UsPersonalChannel == null) {
+                                    Text(
+                                        "Добавить",
+                                        color = Color(0xFF368CCC),
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.Normal,
+                                        modifier = Modifier.padding(
+                                            top = 15.dp,
+                                            start = 20.dp,
+                                            bottom = 7.dp
+                                        )
+                                    )
 
-                               }
+                                }
 
 
-
-                           }
-                   }}}
+                            }
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.padding(vertical = 6.dp))
                 Box(
                     modifier = Modifier.background(color = Color(0xFF202a36))
                 ) {
@@ -268,17 +315,23 @@ fun EditPr(user: UserData) {
                         )
 
                         Box(modifier = Modifier.clickable { }) {
-                            Row  (modifier = Modifier.clickable {  }, verticalAlignment = Alignment.CenterVertically) {
+                            Row(
+                                modifier = Modifier.clickable { },
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
                                 OutlinedTextField(
                                     value = userdisrcby!!,
                                     textStyle = TextStyle(fontSize = 18.sp, color = Color.White),
                                     onValueChange = {
-                                        userdisrcby = it
-                                        user.UsDiscription = it
+                                        if (it.length <= 60) {
+                                            userdisrcby = it
+                                            user.UsDiscription = it
+                                        }
                                     },
                                     placeholder = { Text("Напишите что-нибудь о себе...") },
                                     modifier =
                                         Modifier
+                                            .fillMaxWidth(0.8f)
                                             .offset(x = (-16).dp)
                                             .background(color = Color.Transparent),
                                     colors = androidx.compose.material3.TextFieldDefaults.colors(
@@ -292,14 +345,21 @@ fun EditPr(user: UserData) {
                                         focusedPlaceholderColor = Color.Gray,
                                     )
                                 )
-                                Row(modifier = Modifier.fillMaxSize(),
+                                Row(
+                                    modifier = Modifier.fillMaxSize(),
                                     verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.End){
-                                    Text("${60-userdisrcby.length}",fontSize = 18.sp, modifier = Modifier.padding(end = 17.dp),color = Color.Gray)
-                                }}
+                                    horizontalArrangement = Arrangement.End
+                                ) {
+                                    Text(
+                                        "${60 - userdisrcby.length}",
+                                        fontSize = 18.sp,
+                                        modifier = Modifier.padding(end = 17.dp),
+                                        color = if ((60 - userdisrcby.length) != 0) Color.Gray else Color.Red
+                                    )
+                                }
+                            }
 
                         }
-
 
 
                     }
@@ -308,6 +368,45 @@ fun EditPr(user: UserData) {
                 }
 
                 Spacer(modifier = Modifier.padding(vertical = 6.dp))
+
+                Column(
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .fillMaxWidth()
+                ) {
+
+                    Text(
+                        "Вы можете добавить несколько строк о себе.", color = Color.Gray,
+                        fontSize = 16.sp,
+                    )
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            "В", color = Color.Gray,
+                            fontSize = 16.sp,
+                        )
+                        Text(
+                            "настройках", color = Color(0xFF368CCC),
+                            fontSize = 16.sp, modifier = Modifier
+                                .padding(start = 5.dp)
+                                .clickable { })
+                        Text(
+                            "можно выбрать,кому они будут ", color = Color.Gray,
+                            fontSize = 16.sp, modifier = Modifier
+                                .padding(start = 5.dp)
+                        )
+
+                    }
+                    Text(
+                        "видны.", color = Color.Gray,
+                        fontSize = 16.sp,
+                    )
+
+                }
+
                 Spacer(modifier = Modifier.padding(vertical = 6.dp))
                 Box(
                     modifier = Modifier
@@ -315,37 +414,134 @@ fun EditPr(user: UserData) {
                         .background(color = Color(0xFF202a36))
                 ) {
 
-                    Text(
-                        "Помощь",
-                        color = Color(0xFF368CCC),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(top = 15.dp, start = 20.dp, bottom = 7.dp)
-                    )
+                    Column {
+                        Text(
+                            "Дата рождения",
+                            color = Color(0xFF368CCC),
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(top = 15.dp, start = 20.dp, bottom = 7.dp)
+                        )
+                        Row(
+                            modifier = Modifier
+                                .clickable { showPopup = true }
+                                .padding(bottom = 10.dp)) {
+                            Text(
+                                "Дата вашего рождения",
+                                color = Color.White,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Medium,
+                                modifier = Modifier.padding(
+                                    top = 15.dp,
+                                    start = 20.dp,
+                                    bottom = 7.dp
+                                )
+                            )
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(end = 10.dp),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                if (currentUser.UsDateOfBirthday != null) {
+                                    Text(
+                                        currentUser.UsDateOfBirthday!!,
+                                        color = Color(0xFF368CCC),
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.Normal,
+                                        modifier = Modifier.padding(
+                                            top = 15.dp,
+                                            start = 20.dp,
+                                            bottom = 7.dp
+                                        )
+                                    )
+
+                                } else if (currentUser.UsDateOfBirthday == null) {
+                                    Text(
+                                        "Указать",
+                                        color = Color(0xFF368CCC),
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.Normal,
+                                        modifier = Modifier.padding(
+                                            top = 15.dp,
+                                            start = 20.dp,
+                                            bottom = 7.dp
+                                        )
+                                    )
+
+                                }
+
+                            }
+
+                        }
+                        Box(modifier = Modifier.padding(top = 7.dp)) {
+                            Spacer(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(1.dp)
+                                    .background(color = Color(0xFF182330))
+                            )
+
+                        }
+                        if (currentUser.UsDateOfBirthday != null) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        currentUser = currentUser.copy(UsDateOfBirthday = null)
+                                    }) {
+                                Text(
+                                    "Удалить дату рождения",
+                                    color = Color.Red,
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Normal,
+                                    modifier = Modifier.padding(
+                                        top = 15.dp,
+                                        start = 20.dp,
+                                        bottom = 13.dp
+                                    )
+                                )
+                            }
+
+
+                        }
+
+
+                    }
                 }
 
                 Spacer(modifier = Modifier.padding(vertical = 6.dp))
-
-                Row(
+                Column(
                     modifier = Modifier
-                        .clickable { }
-                        .padding(top = 10.dp, start = 13.dp, bottom = 10.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                        .padding(start = 20.dp)
+                        .fillMaxWidth()
                 ) {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
+
+                    Text(
+                        "Ваш день рождения могут видеть только", color = Color.Gray,
+                        fontSize = 16.sp,
+                    )
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
                     ) {
                         Text(
-                            text = "SparkGram для Android v11.12.0 (5997) store bundled arm64-v8a",
-                            color = Color.Gray,
+                            "контакты.", color = Color.Gray,
                             fontSize = 16.sp,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth(0.9f)
                         )
+                        Text(
+                            "Изменить >", color = Color(0xFF368CCC),
+                            fontSize = 16.sp, modifier = Modifier
+                                .padding(start = 5.dp)
+                                .clickable { })
+
                     }
+
                 }
+
+
+                Spacer(modifier = Modifier.padding(vertical = 6.dp))
             }
 
         }
@@ -363,12 +559,13 @@ fun EditPr(user: UserData) {
                     .clickable { showPopup = false }) {
                 Box(
                     modifier = Modifier
+                        .align(Alignment.BottomCenter)
                         .fillMaxWidth()
-                        .padding(top = 40.dp, start = 100.dp, end = 10.dp)
+                        .padding()
                         .offset(y = offsetY.dp)
                         .shadow(8.dp, RoundedCornerShape(8.dp))
                         .background(Color(0xFF2a3c52), RoundedCornerShape(8.dp))
-                        .padding(16.dp)
+                        .padding(8.dp)
                         .clickable() {}
                 ) {
                     Column {
@@ -379,42 +576,93 @@ fun EditPr(user: UserData) {
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Image(
-                                painter = painterResource(R.drawable.edit),
-                                contentDescription = "Профиль",
-                                modifier = Modifier
-                                    .size(30.dp)
-                                    .padding()
-                            )
-                            Spacer(modifier = Modifier.padding(vertical = 5.dp))
                             Text(
-                                "Изменить информацию",
+                                "Дата рождения",
                                 color = Color.White,
-                                fontSize = 18.sp,
-                                modifier = Modifier.padding(start = 10.dp)
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(start = 10.dp, bottom = 10.dp)
                             )
                         }
                         Row(
-                            modifier = Modifier
-                                .clickable { }
-                                .padding(top = 10.dp, bottom = 10.dp)
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Image(
-                                painter = painterResource(R.drawable.log_out),
-                                contentDescription = "Профиль",
+                            LazyColumn(
                                 modifier = Modifier
-                                    .size(30.dp)
-                                    .padding()
-                            )
-                            Spacer(modifier = Modifier.padding(vertical = 5.dp))
-                            Text(
-                                "Выход",
-                                color = Color(0xFFFC4C53),
-                                fontSize = 18.sp,
-                                modifier = Modifier.padding(start = 10.dp)
-                            )
+                                    .fillMaxHeight(0.3f)
+                                    .weight(1f),
+                                state = daysState
+                            ) {
+
+                                items(count = Int.MAX_VALUE) { index ->
+                                    val day = days[index % days.size]
+                                    Row(
+                                        modifier = Modifier
+                                            .padding(top = 10.dp, bottom = 10.dp)
+                                            .fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.Center
+                                    ) {
+                                        Text(
+                                            "$day",
+                                            color = Color.White,
+                                            fontSize = 15.sp,
+
+                                            )
+                                    }
+
+                                }
+                            }
+                            LazyColumn(
+                                modifier = Modifier
+                                    .fillMaxHeight(0.3f)
+                                    .weight(1f),
+                                state = monthsState
+                            ) {
+
+                                items(count = Int.MAX_VALUE) { index ->
+                                    val month = months[index % months.size]
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(top = 10.dp, bottom = 10.dp),
+                                        horizontalArrangement = Arrangement.Center
+                                    ) {
+                                        Text(
+                                            "$month",
+                                            color = Color.White,
+                                            fontSize = 15.sp,
+
+                                            )
+                                    }
+
+                                }
+                            }
+                            LazyColumn(
+                                modifier = Modifier
+                                    .fillMaxHeight(0.3f)
+                                    .weight(1f),
+                                state = yearsState
+                            ) {
+
+                                items(count = Int.MAX_VALUE) { index ->
+                                    val year = years[index % years.size]
+                                    Row(
+                                        modifier = Modifier
+                                            .padding(top = 10.dp, bottom = 10.dp)
+                                            .fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.Center
+                                    ) {
+                                        Text(
+                                            "$year",
+                                            color = Color.White,
+                                            fontSize = 15.sp,
+
+                                            )
+                                    }
+
+                                }
+                            }
                         }
 
                     }
@@ -422,108 +670,7 @@ fun EditPr(user: UserData) {
 
             }
         }
-        if (showQn) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable { showQn = false },
-                contentAlignment = Alignment.Center,
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(15.dp)
-                        .alpha(alpha)
-                        .shadow(8.dp, RoundedCornerShape(8.dp))
-                        .background(Color(0xFF2a3c52), RoundedCornerShape(8.dp))
-                        .padding(8.dp)
-                        .clickable() {},
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Column(
-                        modifier = Modifier.padding(
-                            15.dp
-                        )
-                    ) {
-                        Text(
-                            "Задать вопрос",
-                            modifier = Modifier.padding(bottom = 10.dp),
-                            color = Color.White,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                        Text(
-                            "Пожалуйста, обратите внимание, что в поддержке SparkGram отвечают масоны. Мы постараемся помочь как можно скорее, но ожидание может занять время.",
-                            color = Color.White,
-                            fontSize = 16.sp,
-                        )
-                        Text(
-                            "Пожалуйста, ознакомтесь с ",
-                            color = Color.White,
-                            modifier = Modifier.padding(top = 10.dp),
-                            fontSize = 16.sp,
-                        )
-                        Row() {
-                            Text(
-                                "частыми вопросами о Telegram ",
-                                color = Color(0xFF368CCC),
-                                fontSize = 16.sp,
-                                modifier = Modifier.clickable {})
-                            Text(
-                                ":",
-                                color = Color.White,
-                                fontSize = 16.sp,
-                            )
-                        }
 
-                        Text(
-                            "там есть ответ на большинство вопросов и важные советы по ",
-                            color = Color.White,
-                            fontSize = 16.sp,
-                        )
-                        Row() {
-                            Text(
-                                "устранению неполадок",
-                                color = Color(0xFF368CCC), fontSize = 16.sp,
-                                modifier = Modifier.clickable {})
-                            Text(
-                                ".",
-                                color = Color.White,
-                                fontSize = 16.sp,
-                            )
-                        }
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
-                        ) {
-                            Text(
-                                "Отмена",
-                                modifier = Modifier
-                                    .padding(top = 10.dp)
-                                    .clickable {},
-                                fontWeight = FontWeight.Medium,
-                                color = Color(0xFF368CCC),
-                                fontSize = 18.sp
-                            )
-                        }
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
-                        ) {
-                            Text(
-                                "Спросить волонтёров",
-                                fontWeight = FontWeight.Medium,
-                                modifier = Modifier
-                                    .padding(top = 15.dp)
-                                    .clickable {},
-                                color = Color(0xFF368CCC),
-                                fontSize = 18.sp,
-                            )
-                        }
-                    }
-                }
-            }
-        }
     }
 
 }
@@ -534,6 +681,7 @@ fun Selegr2amAppSpark1Theme() {
     EditPr(
         user = UserData(
             UsFirstName = "Alex",
+            UsDateOfBirthday = "30.09.2006",
             UsPhoneNumber = "+ 7 963 132 83 90",
             UsLastName = "Mas0n",
             UsDiscription = "Fucking Woods",
@@ -545,6 +693,7 @@ fun Selegr2amAppSpark1Theme() {
                     UsPersonalChannelLastSms = "Last Massage",
                     UsPersonalChannelImageId = R.drawable.avatar,
                     LastMassageIsRead = true
-                ))
+                )
+        )
     )
 }
