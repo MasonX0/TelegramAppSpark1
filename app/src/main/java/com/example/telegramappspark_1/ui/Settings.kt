@@ -928,7 +928,7 @@ fun SettingsTg(user: UserData) {
                                 "Отмена",
                                 modifier = Modifier
                                     .padding(top = 10.dp)
-                                    .clickable {},
+                                    .clickable {showQn=false},
                                 fontWeight = FontWeight.Medium,
                                 color = Color(0xFF368CCC),
                                 fontSize = 18.sp
@@ -943,7 +943,7 @@ fun SettingsTg(user: UserData) {
                                 fontWeight = FontWeight.Medium,
                                 modifier = Modifier
                                     .padding(top = 15.dp)
-                                    .clickable {},
+                                    .clickable {showQn=false},
                                 color = Color(0xFF368CCC),
                                 fontSize = 18.sp,
                             )
