@@ -426,7 +426,7 @@ fun Profile(user: UserData) {
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
-                                .clickable { puble=false}
+                                .clickable { puble = false }
                                 .padding(top = 15.dp, start = 29.dp, bottom = 7.dp)
                         )
                     }
