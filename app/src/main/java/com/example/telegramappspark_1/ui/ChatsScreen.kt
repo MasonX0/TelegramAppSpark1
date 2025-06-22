@@ -211,7 +211,7 @@ fun ChatsScreen() {
                                             painter = painterResource(R.drawable.chevron_down), null,
                                             modifier = Modifier
                                                 .padding(top = 7.dp, end = 10.dp)
-                                                .clickable { }
+                                                .clickable {showak =!showak}
                                                 .size(30.dp)
                                         )
                                     }
@@ -219,7 +219,7 @@ fun ChatsScreen() {
                                             painter = painterResource(R.drawable.chevron_up), null,
                                             modifier = Modifier
                                                 .padding(top = 7.dp, end = 10.dp)
-                                                .clickable { }
+                                                .clickable {showak=!showak }
                                                 .size(30.dp)
                                         )
                                         }
