@@ -95,202 +95,6 @@ fun Settings_Confidentiality(user: UserData) {
             }
             item {
                 Box(
-                    modifier = Modifier.background(color = Color(0xFF202a36))
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 20.dp)
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            "Кто видит мой раздел \"О себе\"?", color = Color(0xFF368CCC),
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 15.dp)
-                        )
-
-                        Row(
-                            modifier = Modifier
-                                .clickable {
-                                    always = true
-                                    contakts = false
-                                    nobody = false
-                                }
-                                .fillMaxSize(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                "Всегда скрывать",
-                                color = Color.White,
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Medium,
-                                modifier = Modifier.padding(
-                                    top = 15.dp,
-                                    bottom = 7.dp
-                                )
-                            )
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(end = 20.dp, top = 5.dp),
-                                horizontalArrangement = Arrangement.End,
-                            )
-
-                            {
-                                if (always == true) {
-                                    Image(
-                                        painter = painterResource(R.drawable.check_circle_yes),
-                                        null
-                                    )
-                                } else if (always == false) {
-                                    Image(
-                                        painter = painterResource(R.drawable.check_circle_not),
-                                        null
-                                    )
-                                }
-
-                            }
-
-                        }
-                        Box(modifier = Modifier.padding(top = 7.dp)) {
-                            Spacer(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(1.dp)
-                                    .background(color = Color(0xFF182330))
-                            )
-
-                        }
-                        Row(
-                            modifier = Modifier
-                                .clickable {
-                                    contakts = true
-                                    always = false
-                                    nobody = false
-                                }
-                                .fillMaxSize(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                "Контакты",
-                                color = Color.White,
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Medium,
-                                modifier = Modifier.padding(
-                                    top = 15.dp,
-                                    bottom = 7.dp
-                                )
-                            )
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(end = 20.dp, top = 5.dp),
-                                horizontalArrangement = Arrangement.End,
-                            )
-
-                            {
-                                if (contakts == true) {
-                                    Image(
-                                        painter = painterResource(R.drawable.check_circle_yes),
-                                        null
-                                    )
-                                } else if (contakts == false) {
-                                    Image(
-                                        painter = painterResource(R.drawable.check_circle_not),
-                                        null
-                                    )
-                                }
-                            }
-
-                        }
-                        Box(modifier = Modifier.padding(top = 7.dp)) {
-                            Spacer(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(1.dp)
-                                    .background(color = Color(0xFF182330))
-                            )
-
-                        }
-                        Row(
-                            modifier = Modifier
-                                .clickable {
-                                    nobody = true
-                                    always = false
-                                    contakts = false
-                                }
-                                .fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                "Никто",
-                                color = Color.White,
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Medium,
-                                modifier = Modifier.padding(
-                                    top = 15.dp,
-                                    bottom = 13.dp
-                                )
-                            )
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(end = 20.dp, top = 5.dp),
-                                horizontalArrangement = Arrangement.End,
-                            )
-
-                            {
-                                if (nobody == true) {
-                                    Image(
-                                        painter = painterResource(R.drawable.check_circle_yes),
-                                        null
-                                    )
-                                } else if (nobody == false) {
-                                    Image(
-                                        painter = painterResource(R.drawable.check_circle_not),
-                                        null
-                                    )
-                                }
-
-                            }
-
-                        }
-
-
-                    }
-
-
-                }
-
-
-                Spacer(modifier = Modifier.padding(vertical = 6.dp))
-
-
-                Spacer(modifier = Modifier.padding(vertical = 6.dp))
-
-                Column(
-                    modifier = Modifier
-                        .padding(start = 20.dp)
-                        .fillMaxWidth()
-                ) {
-
-                    Text(
-                        "Вы можете добавить пользователей или целые ", color = Color.Gray,
-                        fontSize = 16.sp,
-                    )
-
-
-                    Text(
-                        "группы, которые не будут видеть Ваш раздел", color = Color.Gray,
-                        fontSize = 16.sp,
-                    )
-                    Text(
-                        "\"О себе\"", color = Color.Gray,
-                        fontSize = 16.sp,
-                    )
-
-
-                }
-
-                Spacer(modifier = Modifier.padding(vertical = 6.dp))
-                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(color = Color(0xFF202a36))
@@ -313,7 +117,7 @@ fun Settings_Confidentiality(user: UserData) {
                         ) {
 
                             Image(
-                                painter = painterResource(R.drawable.user),
+                                painter = painterResource(R.drawable.rss),
                                 contentDescription = "Профиль",
                                 modifier = Modifier.size(30.dp)
 
@@ -384,7 +188,7 @@ fun Settings_Confidentiality(user: UserData) {
                         ) {
 
                             Image(
-                                painter = painterResource(R.drawable.user),
+                                painter = painterResource(R.drawable.timer),
                                 contentDescription = "Профиль",
                                 modifier = Modifier.size(30.dp)
 
@@ -454,7 +258,7 @@ fun Settings_Confidentiality(user: UserData) {
                         ) {
 
                             Image(
-                                painter = painterResource(R.drawable.user),
+                                painter = painterResource(R.drawable.lock_1),
                                 contentDescription = "Профиль",
                                 modifier = Modifier.size(30.dp)
 
@@ -524,7 +328,7 @@ fun Settings_Confidentiality(user: UserData) {
                         ) {
 
                             Image(
-                                painter = painterResource(R.drawable.user),
+                                painter = painterResource(R.drawable.ban),
                                 contentDescription = "Профиль",
                                 modifier = Modifier.size(30.dp)
 
@@ -578,7 +382,7 @@ fun Settings_Confidentiality(user: UserData) {
                         ) {
 
                             Image(
-                                painter = painterResource(R.drawable.user),
+                                painter = painterResource(R.drawable.monitor_1),
                                 contentDescription = "Профиль",
                                 modifier = Modifier.size(30.dp)
 
