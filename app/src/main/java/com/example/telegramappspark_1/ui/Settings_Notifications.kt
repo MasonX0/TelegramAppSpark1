@@ -230,7 +230,7 @@ fun settings_Notf(user: UserData) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(1.dp)
-                                    .background(color = Color(0xFF182330))
+                                    .background(color = Color(0xFF202a36))
                             )
 
                         }
